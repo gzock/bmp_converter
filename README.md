@@ -10,7 +10,14 @@ e.g. png -> bmp
 
 # Usage
 
+* convert a jpg to bmp of supporting format for pico-restouch-lcd
+
 ```
 $ python main.py show src.bmp
 $ python main.py conv src.jpg out.bmp
+```
+
+* generate a clang code from bmp image
+```
+$ python gen_c_array.py sample.bmp bmp_image_array
 ```
