@@ -2,17 +2,26 @@ import sys
 from PIL import Image
 import struct
 
-def convert(input_path, output_path, width=320, height=480):
+def convert(input_path, output_path, model="3.5"):
     """
-    Resizes an image to the specified width and height, converts it to RGB mode if necessary,
+    Resizes an image according to the model ("3.5" or "2.8"), converts it to RGB mode if necessary,
     and saves it as a BMP file.
 
     Parameters:
     - input_path (str): Path to the input image.
     - output_path (str): Path to save the output BMP image.
-    - width (int): Width to resize the image to (default is 320).
-    - height (int): Height to resize the image to (default is 480).
+    - model (str): If "3.5", resize to 320x480; if "2.8", resize to 320x240. Default is "3.5".
     """
+    # 選択されたモデルに応じて解像度を決定
+    if model == "3.5":
+        width, height = 320, 480
+    elif model == "2.8":
+        width, height = 240, 320
+    else:
+        # 想定外の値ならデフォルトを採用
+        print(f"Warning: Unknown model '{model}'. Falling back to default (3.5).")
+        width, height = 320, 480
+
     # Open the original image
     image = Image.open(input_path)
 
@@ -50,9 +59,23 @@ def show(file_path):
     print(f"Bits Per Pixel: {bits_per_pixel}")
 
 def main():
+    """
+    Usage:
+        python main.py <operation> <input_file> [output_file] [model]
+
+    Examples:
+        # model省略時 (デフォルト3.5) -> 320x480
+        python main.py conv input.jpg output.bmp
+
+        # modelに2.8を指定 -> 320x240
+        python main.py conv input.jpg output.bmp 2.8
+
+        # メタデータ表示
+        python main.py show input.bmp
+    """
     if len(sys.argv) < 3:
-        print("Usage: python main.py <operation> <input_file> [output_file]")
-        print("Operations: conv, show_metadata")
+        print("Usage: python main.py <operation> <input_file> [output_file] [model]")
+        print("Operations: conv, show")
         return
 
     operation = sys.argv[1]
@@ -62,8 +85,12 @@ def main():
         if len(sys.argv) < 4:
             print("Please provide an output file path for conversion.")
             return
+
         output_path = sys.argv[3]
-        convert(input_path, output_path)
+        # modelパラメータを受け取る。なければ"3.5"をデフォルトとする
+        model = sys.argv[4] if len(sys.argv) >= 5 else "3.5"
+
+        convert(input_path, output_path, model)
     elif operation == "show":
         show(input_path)
     else:
