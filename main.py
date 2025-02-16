@@ -17,6 +17,8 @@ def convert(input_path, output_path, model="3.5"):
         width, height = 320, 480
     elif model == "2.8":
         width, height = 240, 320
+    elif model == "1.8":
+        width, height = 128, 160
     else:
         # 想定外の値ならデフォルトを採用
         print(f"Warning: Unknown model '{model}'. Falling back to default (3.5).")
@@ -69,6 +71,9 @@ def main():
 
         # modelに2.8を指定 -> 320x240
         python main.py conv input.jpg output.bmp 2.8
+
+        # modelに1.8を指定 -> 160x128
+        python main.py conv input.jpg output.bmp 1.8
 
         # メタデータ表示
         python main.py show input.bmp
