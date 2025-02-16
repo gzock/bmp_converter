@@ -4,6 +4,7 @@ This is BMP images converter for WaveShare display of Raspberry Pico
 
 - https://www.waveshare.com/wiki/Pico-ResTouch-LCD-3.5
 - https://www.waveshare.com/wiki/Pico-ResTouch-LCD-2.8
+  https://www.waveshare.com/wiki/Pico-LCD-1.8
 
 This tool can convert from various image formats to BMP Images.
 e.g. png -> bmp
